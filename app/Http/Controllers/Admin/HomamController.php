@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Archanai;
-use App\Models\Category;
-use Galahad\Aire\Support\Facades\Aire;
+use App\Models\Homam;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Illuminate\Support\Str;
-class ArchanaiController extends Controller
+class HomamController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,13 +16,14 @@ class ArchanaiController extends Controller
     public function index()
     {
         //
-        $page = collect([
-          'title' => 'Add Archanai',
-          'name' => 'Archanai'
-        ]);
 
-   $archanais = Archanai::orderBy('sort_order','ASC')->get();
-   return view('backend.archanai.index',compact('page','archanais'));
+        $page = collect([
+            'title' => 'Add Homam & Parikaram',
+            'name' => 'Homam & Parikaram'
+          ]);
+  
+     $homams = Homam::orderBy('sort_order','ASC')->get();
+     return view('backend.homam.index',compact('page','homams'));
     }
 
     /**
@@ -37,23 +35,12 @@ class ArchanaiController extends Controller
     {
         //
 
-        
-        $categorylist = array();
-        $categorylist[''] = 'Choose Category' ;  
-          $categories = Category::select('id','name')->get();
-          foreach($categories as $category) {
-            $categorylist[$category->id] = $category->name ;  
-          
-
-          }
-
- 
         $page = collect([
-            'title' => 'Add Archanai',
-            'name' => 'Archanai'
+            'title' => 'Add Homam & Parikaram',
+            'name' => 'Homam & Parikaram'
           ]);
 
-        return view('backend.archanai.create',compact('page','categorylist'));
+        return view('backend.homam.create',compact('page'));
     }
 
     /**
@@ -66,9 +53,11 @@ class ArchanaiController extends Controller
     {
         //
 
+    //    return $request->all();
+
         $this->validate($request, [
-            'title' => 'required|unique:archanais',
-            'category_id' => 'required',
+            'title' => 'required|unique:homams',
+            
             'upload_image' => 'required',
             'price' => 'required'
         ],
@@ -76,9 +65,9 @@ class ArchanaiController extends Controller
         );
 
 
-        $Archanai = new Archanai();
+        $homam = new Homam();
         if($request->hasFile('upload_image')) {
-            $fileName = time().'_'.$request->upload_image->getClientOriginalName();
+            $fileName = time().'_homam-parikaram_'.$request->upload_image->getClientOriginalName();
             $filePath = $request->file('upload_image')->storeAs('uploads', $fileName, 'public');
           //  $fileModel->name = time().'_'.$request->file->getClientOriginalName();
            
@@ -87,14 +76,14 @@ class ArchanaiController extends Controller
              $filePath = 'No Image';
              $fileName = 'No Image';
         }
-       $Archanai->title = $request->title;
-       $Archanai->category_id = $request->category_id;
-        $Archanai->image = '/storage/' . $filePath;
-        $Archanai->slug =  Str::slug($request->title);
-        $Archanai->sort_order = $request->sort_order;
-        $Archanai->status = $request->status;
-        $Archanai->price = $request->price;
-        if($Archanai->save()) {
+       $homam->title = $request->title;
+      // $homam->category_id = $request->category_id;
+        $homam->image = '/storage/' . $filePath;
+        $homam->slug =  Str::slug($request->title);
+        $homam->sort_order = $request->sort_order;
+        $homam->status = $request->status;
+        $homam->price = $request->price;
+        if($homam->save()) {
 
             // return 2;
            return back()->with('success','Successfully Created');
@@ -124,25 +113,16 @@ class ArchanaiController extends Controller
     {
         //
 
-        $categorylist = array();
-        $categorylist[''] = 'Choose Category' ;  
-          $categories = Category::select('id','name')->get();
-          foreach($categories as $category) {
-            $categorylist[$category->id] = $category->name ;  
-          
-
-          }
-
-   $archanai =Archanai::find($id);
+        $homam =Homam::find($id);
 
 
  
         $page = collect([
-            'title' => 'Edit Archanai',
-            'name' => 'Archanai'
+            'title' => 'Edit Homam & Parikaram',
+            'name' => 'Homam & Parikaram'
           ]);
 
-        return view('backend.archanai.edit',compact('page','categorylist','archanai'));
+        return view('backend.homam.edit',compact('page','homam'));
     }
 
     /**
@@ -156,36 +136,38 @@ class ArchanaiController extends Controller
     {
         //
 
-
         $this->validate($request, [
-          'title' => 'required',
-          'category_id' => 'required',
-          
-      ],);
+            'title' => 'required',
+            
+        
+            'price' => 'required'
+        ],
+  
+        );
 
 
-        $Archanai = Archanai::find($id);
+        $homam = Homam::find($id);
         if($request->hasFile('upload_image')) {
-            $fileName = time().'_'.$request->upload_image->getClientOriginalName();
+            $fileName = time().'_homam-parikaram_'.$request->upload_image->getClientOriginalName();
             $filePath = $request->file('upload_image')->storeAs('uploads', $fileName, 'public');
           //  $fileModel->name = time().'_'.$request->file->getClientOriginalName();
            
            
         } else {
              $filePath = $request->current_image;
-             
+             $fileName = 'No Image';
         }
-       $Archanai->title = $request->title;
-       $Archanai->category_id = $request->category_id;
-        $Archanai->image = '/storage/' . $filePath;
-        $Archanai->slug =  Str::slug($request->title);
-        $Archanai->sort_order = $request->sort_order;
-        $Archanai->status = $request->status;
-        $Archanai->price = $request->price;
-        if($Archanai->save()) {
+       $homam->title = $request->title;
+      // $homam->category_id = $request->category_id;
+        $homam->image = '/storage/' . $filePath;
+        $homam->slug =  Str::slug($request->title);
+        $homam->sort_order = $request->sort_order;
+        $homam->status = $request->status;
+        $homam->price = $request->price;
+        if($homam->save()) {
 
             // return 2;
-           return back()->with('success','Successfully Updated!');
+           return back()->with('success','Successfully Updated');
         }   else {
               return back()->with('failure','Sorry Some Error');
         }
@@ -200,8 +182,7 @@ class ArchanaiController extends Controller
     public function destroy($id)
     {
         //
-
-        $delete  = Archanai::find($id);
+        $delete  = Homam::find($id);
 
         if($delete->delete()) {
 

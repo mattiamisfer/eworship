@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ArchanaiController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\HomamController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\PlansController;
@@ -86,6 +87,7 @@ Route::delete('/options/delete/{id}',[OptionController::class,'destroy'])->name(
 
 Route::resource('archanai', ArchanaiController::class,['names' => 'admin.archanai']);
 
+Route::resource('homam-parikaram', HomamController::class,['names' => 'admin.homam']);
 
 });
 
