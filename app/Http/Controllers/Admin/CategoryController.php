@@ -18,8 +18,13 @@ class CategoryController extends Controller
     {
         //
 
+         $page = collect([
+             'title' => 'Add New',
+             'name' => 'Category'
+            ]);
+
         $categories = Category::orderBy('id','desc')->get();
-        return view('backend.category.index',compact('categories'));
+        return view('backend.category.index',compact('categories','page'));
 
 
     }
@@ -33,7 +38,7 @@ class CategoryController extends Controller
     {
         //
 
-        $fields = collect([
+         $fields = collect([
             [
 
                 'label' => 'Category Name',
@@ -44,12 +49,16 @@ class CategoryController extends Controller
                 'validate' =>  true
 
             ],
+          
 
         ]
           );
+          $page = collect([
+              'title' => 'Add Category',
+              'name' => 'Category'
+            ]);
 
-
-        return view('backend.category.create',compact('fields'));
+        return view('backend.category.create',compact('fields','page'));
     }
 
     /**
@@ -85,6 +94,18 @@ class CategoryController extends Controller
     }
 
 
+    // if(array_key_exists('attachment',$_FILES)) {
+    //     $img_name = $_FILES['attachment']['name'];
+    //     $upload =   tempnam(sys_get_temp_dir(), hash('sha256', $_FILES['attachment']['name']));
+
+
+    //     $uploadFile = $_SERVER['DOCUMENT_ROOT'].'upload/'.$img_name;
+    //     if(move_uploaded_file($_FILES["attachment"]["tmp_name"], $uploadFile)){
+
+    //     }
+    // }
+
+
 
         // return $request->all();
     }
@@ -113,7 +134,7 @@ class CategoryController extends Controller
          $id = $id;
 
 
-        $category = Category::find($id);
+         $category = Category::find($id);
         $fields = collect([
             [
 
@@ -131,9 +152,12 @@ class CategoryController extends Controller
           );
 
 
+          $page = collect([
+            'title' => 'Edit Category',
+            'name' => 'Category'
+          ]);
 
-
-        return view('backend.category.edit',compact('fields','category'));
+        return view('backend.category.edit',compact('fields','category','page'));
 
 
     }

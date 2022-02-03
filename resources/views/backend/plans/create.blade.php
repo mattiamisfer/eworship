@@ -50,6 +50,13 @@
 
                      @csrf
 
+                     <div class="col-12">
+                        {{ Aire::input('given_name', 'First/Given Name')
+                        ->id('given_name')
+                        ->autoComplete('off')
+                        ->groupClass('form-control border-start-0') }}
+                     </div>
+                     
 
                         @foreach ($fields as $item)
                         <div class="col-12">

@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
         //
         // Schema::defaultStringLength(191);
 
-        $categories = Category::with(['subcategory'])->get();
+         $categories = Category::with(['subcategory'])->get();
 
         view()->share('categories',$categories);
 

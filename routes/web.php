@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ArchanaiController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\OptionController;
@@ -81,6 +82,10 @@ Route::post('/options/store',[OptionController::class,'store'])->name('admin.opt
 Route::get('/options/edit/{id}',[OptionController::class,'edit'])->name('admin.option.edit');
 Route::put('/options/update/{id}',[OptionController::class,'update'])->name('admin.option.update');
 Route::delete('/options/delete/{id}',[OptionController::class,'destroy'])->name('admin.option.delete');
+
+
+Route::resource('archanai', ArchanaiController::class,['names' => 'admin.archanai']);
+
 
 });
 
