@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Homam;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,28 +26,16 @@ class HomeController extends Controller
     {
 
 
-        return view('home');
+
+        $homams  = Homam::all();
+
+        return view('web.home',compact('homams'));
     }
 
-    public function about() {
-        return view('front_end.about');
+
+    public function horoscope() {
+        return view('web.horoscope');
     }
 
-
-    public function services() {
-        return view('front_end.centres');
-
-    }
-
-    public function events() {
-        return view('front_end.events');
-    }
-
-    public function contact() {
-        return view('front_end.contact');
-    }
-
-    public function proceed() {
-        return view('front_end.proceed');
-    }
+    
 }

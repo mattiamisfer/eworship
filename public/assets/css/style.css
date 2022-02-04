@@ -54,6 +54,10 @@ body {
 }
 /*--------- Body End -------*/
 /*---------- Normal Css Start -------*/
+
+.error {
+    color: red;
+}
 a {
 	color: #777777;
 	text-decoration: none;

@@ -42,6 +42,21 @@
         <h6 class="mb-0 text-uppercase">DataTable Import</h6>
         <hr/>
 
+        <div class="row">
+
+            @if (Session::has('success'))
+
+            <div class="alert alert-success" role="alert">
+              {{ Session::get('success') }}
+            </div>
+            @endif
+            @if (Session::has('failure'))
+            <div class="alert alert-danger" role="alert">
+              {{ Session::get('failure') }}
+            </div>
+         @endif
+        </div>
+
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">

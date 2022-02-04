@@ -7,16 +7,20 @@ use App\Http\Controllers\Admin\HomamController;
 use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\PlansController;
+use App\Http\Controllers\Admin\RitualController;
+use App\Http\Controllers\Admin\VasthuController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\user\AjaxController;
 use App\Http\Controllers\user\BookingController;
 use App\Http\Controllers\user\DashboardController;
+use App\Http\Controllers\user\UserController;
 use App\Http\Controllers\Web\PakcageController;
 use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\ServiceController;
 use App\Http\Controllers\Web\StoreController;
 use App\Models\User;
+use App\Models\Vasthu;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -44,7 +48,7 @@ Route::get('/check_query', function () {
 
 
 Route::get('/', function () {
-    return view('front_end.index');
+    return view('web.home');
 });
 Auth::routes();
 Route::get('/packages',[PakcageController::class,'index'])->name('package');
@@ -59,7 +63,10 @@ Route::get('/guest-login',[GuestController::class,'index'])->name('guest');
 Route::get('/collections/igl-coating',[ProductController::class,'iglCollection'])->name('collection.igl');
 Route::get('/collections/stek-automative',[ProductController::class,'stekCollection'])->name('collection.stek');
 
+Route::post('/ajax-create',[UserController::class,'create'])->name('ajax.create');
+Route::post('/ajax-login',[UserController::class,'doLogin'])->name('ajax.doLogin');
 
+Route::get('/horoscope',[HomeController::class,'horoscope'])->name('horoscope');
 
 Route::group(['middleware' => ['auth', 'user'], 'prefix' => 'user'], function () {
     Route::post('/ajaxRequest', [AjaxController::class, 'cars'])->name('ajaxRequest.post');
@@ -88,6 +95,8 @@ Route::delete('/options/delete/{id}',[OptionController::class,'destroy'])->name(
 Route::resource('archanai', ArchanaiController::class,['names' => 'admin.archanai']);
 
 Route::resource('homam-parikaram', HomamController::class,['names' => 'admin.homam']);
+Route::resource('vasthu', VasthuController::class,['names' => 'admin.vasthu']);
+Route::resource('rituals-for-ancestors', RitualController::class,['names' => 'admin.ritual']);
 
 });
 
